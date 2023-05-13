@@ -1,33 +1,33 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:colorama/configuration/helpers.dart';
 import 'package:colorama/configuration/state.dart';
 import 'package:colorama/configuration/storage.dart';
-import 'package:colorama/pages/chooser.dart';
+import 'package:colorama/pages/wait_chooser.dart';
 import 'package:flutter/material.dart';
 
-class WaitRestPage extends StatelessWidget {
-  const WaitRestPage({super.key});
+class PlayerWaitRestPage extends StatefulWidget {
+  const PlayerWaitRestPage({super.key});
 
-  Future<void> _startGame(BuildContext context) async {
-    try {
-      final matchId = GlobalState.currentMatchId!;
-      await Storage.startGame(matchId: matchId);
+  @override
+  State<PlayerWaitRestPage> createState() => _PlayerWaitRestPageState();
+}
 
-      Navigator.of(context).push(
-        MaterialPageRoute(
-          builder: (_) => const ChooserPage(),
-          settings: const RouteSettings(name: 'ChooserPage'),
-        ),
-      );
-    } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            'Ocurrió un error ${e.toString()}',
+class _PlayerWaitRestPageState extends State<PlayerWaitRestPage> {
+  @override
+  void initState() {
+    super.initState();
+    Storage.getStream().listen((snapshot) {
+      final data = snapshot.data() as Map;
+      final started = data['started'];
+
+      if (started == true) {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (_) => const WaitChooserPage(),
+            settings: const RouteSettings(name: 'WaitChooserPage'),
           ),
-        ),
-      );
-    }
+        );
+      }
+    });
   }
 
   @override
@@ -54,7 +54,7 @@ class WaitRestPage extends StatelessWidget {
                 ),
                 const SizedBox(height: 16),
                 const Text(
-                  'Tu número de partida es:',
+                  'El número de partida es:',
                   style: TextStyle(
                     fontSize: 24,
                   ),
@@ -77,45 +77,12 @@ class WaitRestPage extends StatelessWidget {
                   textAlign: TextAlign.right,
                   style: TextStyle(fontStyle: FontStyle.italic),
                 ),
-                const SizedBox(height: 32),
-                StreamBuilder<DocumentSnapshot>(
-                  stream: Storage.getStream(),
-                  builder: (context, snapshot) {
-                    if (snapshot.data?.data() != null) {
-                      final data = snapshot.data!.data() as Map;
-                      final players = data['players'] as List;
-
-                      return Wrap(
-                        alignment: WrapAlignment.start,
-                        runAlignment: WrapAlignment.start,
-                        runSpacing: 20,
-                        spacing: 20,
-                        children: [
-                          for (final player in players)
-                            Chip(
-                              label: Text(player['name']),
-                            ),
-                        ],
-                      );
-                    }
-
-                    return const SizedBox.shrink();
-                  },
-                ),
                 const Expanded(child: SizedBox.shrink()),
                 const Align(
                   alignment: Alignment.bottomRight,
                   child: Text(
-                    'Apretá continuar cuando todo el mundo ya haya ingresado',
+                    'Cuando todos se hayan unido, el juego va a empezar',
                     textAlign: TextAlign.right,
-                  ),
-                ),
-                const SizedBox(height: 16),
-                Align(
-                  alignment: Alignment.bottomRight,
-                  child: ElevatedButton(
-                    onPressed: () => _startGame(context),
-                    child: const Text('Continuar'),
                   ),
                 ),
                 const SizedBox(height: 32),

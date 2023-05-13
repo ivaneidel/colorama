@@ -4,10 +4,13 @@ import 'package:colorama/configuration/colors.dart';
 import 'package:colorama/firebase_options.dart';
 import 'package:colorama/pages/start.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 void main() async {
-  if (!Platform.isLinux) {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  if (kIsWeb || !Platform.isLinux) {
     await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
     );

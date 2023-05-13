@@ -3,16 +3,17 @@ import 'package:colorama/configuration/helpers.dart';
 import 'package:colorama/configuration/state.dart';
 import 'package:colorama/configuration/storage.dart';
 import 'package:colorama/pages/chooser_waits.dart';
+import 'package:colorama/pages/player_wait_finish.dart';
 import 'package:flutter/material.dart';
 
-class ChooserPage extends StatefulWidget {
-  const ChooserPage({super.key});
+class PlayerChoosesPage extends StatefulWidget {
+  const PlayerChoosesPage({super.key});
 
   @override
-  State<ChooserPage> createState() => _ChooserPageState();
+  State<PlayerChoosesPage> createState() => _PlayerChoosesPageState();
 }
 
-class _ChooserPageState extends State<ChooserPage> {
+class _PlayerChoosesPageState extends State<PlayerChoosesPage> {
   var _r = 0.0;
   var _g = 0.0;
   var _b = 0.0;
@@ -25,17 +26,17 @@ class _ChooserPageState extends State<ChooserPage> {
     return Color.fromARGB(255, r, g, b);
   }
 
-  void _continue() {
+  void _continue() async {
     GlobalState.setR((_r * 255).toInt());
     GlobalState.setG((_g * 255).toInt());
     GlobalState.setB((_b * 255).toInt());
 
-    Storage.startGame(matchId: GlobalState.currentMatchId!);
+    await Storage.guessColor(matchId: GlobalState.currentMatchId!);
 
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (_) => const ChooserWaitsPage(),
-        settings: const RouteSettings(name: 'ChooserWaitsPage'),
+        builder: (_) => const PlayerWaitFinishPage(),
+        settings: const RouteSettings(name: 'PlayerWaitFinishPage'),
       ),
     );
   }
@@ -61,7 +62,7 @@ class _ChooserPageState extends State<ChooserPage> {
               children: [
                 const Expanded(child: SizedBox.shrink()),
                 Text(
-                  'Definí el color de la ronda',
+                  'Adiviná el color',
                   style: TextStyle(
                       fontSize: 24, color: getTextColor(_backgroundColor)),
                 ),

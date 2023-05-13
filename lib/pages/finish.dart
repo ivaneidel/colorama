@@ -2,35 +2,16 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:colorama/configuration/helpers.dart';
 import 'package:colorama/configuration/state.dart';
 import 'package:colorama/configuration/storage.dart';
-import 'package:colorama/pages/finish.dart';
 import 'package:flutter/material.dart';
 
-class ChooserWaitsPage extends StatefulWidget {
-  const ChooserWaitsPage({super.key});
+class FinishPage extends StatefulWidget {
+  const FinishPage({super.key});
 
   @override
-  State<ChooserWaitsPage> createState() => _ChooserWaitsPageState();
+  State<FinishPage> createState() => _FinishPageState();
 }
 
-class _ChooserWaitsPageState extends State<ChooserWaitsPage> {
-  @override
-  void initState() {
-    super.initState();
-    Storage.getStream().listen((snapshot) {
-      final data = snapshot.data() as Map;
-      final finished = data['finished'];
-
-      if (finished == true) {
-        Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (_) => const FinishPage(),
-            settings: const RouteSettings(name: 'FinishPage'),
-          ),
-        );
-      }
-    });
-  }
-
+class _FinishPageState extends State<FinishPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,35 +23,45 @@ class _ChooserWaitsPageState extends State<ChooserWaitsPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            ColorSection(
-              playerName: GlobalState.userName!,
-              r: GlobalState.r!,
-              g: GlobalState.g!,
-              b: GlobalState.b!,
+            const Text(
+              'Partida terminada!',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 32,
+              ),
             ),
+            const SizedBox(height: 32),
             Expanded(
               child: StreamBuilder<DocumentSnapshot>(
                 stream: Storage.getStream(),
                 builder: (context, snapshot) {
                   if (snapshot.data?.data() != null) {
                     final data = snapshot.data!.data() as Map;
+                    final chooser = data['chooser'];
+                    final r = data['r'];
+                    final g = data['g'];
+                    final b = data['b'];
+
                     final players = data['players'] as List;
                     return Column(
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
+                        ColorSection(
+                          playerName: chooser as String,
+                          r: r as int,
+                          g: g as int,
+                          b: b as int,
+                        ),
+                        const SizedBox(height: 16),
                         for (var item in players)
-                          if (item['name'] != null &&
-                              item['r'] != null &&
-                              item['g'] != null &&
-                              item['b'] != null)
-                            ColorSection(
-                              playerName: item['name'] as String,
-                              r: item['r'] as int,
-                              g: item['g'] as int,
-                              b: item['b'] as int,
-                            ),
+                          ColorSection(
+                            playerName: item['name'] as String,
+                            r: item['r'] as int,
+                            g: item['g'] as int,
+                            b: item['b'] as int,
+                          ),
                       ],
                     );
                   }

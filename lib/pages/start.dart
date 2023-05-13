@@ -1,6 +1,7 @@
 import 'package:colorama/configuration/colors.dart';
 import 'package:colorama/configuration/components.dart';
 import 'package:colorama/pages/init.dart';
+import 'package:colorama/pages/join.dart';
 import 'package:flutter/material.dart';
 
 class StartPage extends StatelessWidget {
@@ -28,7 +29,15 @@ class StartPage extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 32),
-            LargeButton(label: 'UNIRSE', onPressed: () {}),
+            LargeButton(
+              label: 'UNIRME',
+              onPressed: () => Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (_) => const JoinPage(),
+                  settings: const RouteSettings(name: 'JoinPage'),
+                ),
+              ),
+            ),
           ],
         ),
       ),

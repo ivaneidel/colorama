@@ -1,37 +1,40 @@
 import 'package:colorama/configuration/state.dart';
 import 'package:colorama/configuration/storage.dart';
-import 'package:colorama/pages/wait_rest.dart';
+import 'package:colorama/pages/player_wait_rest.dart';
 import 'package:flutter/material.dart';
 
-class InitPage extends StatefulWidget {
-  const InitPage({super.key});
+class JoinPage extends StatefulWidget {
+  const JoinPage({super.key});
 
   @override
-  State<InitPage> createState() => _InitPageState();
+  State<JoinPage> createState() => JoinPageState();
 }
 
-class _InitPageState extends State<InitPage> {
+class JoinPageState extends State<JoinPage> {
   final _nameController = TextEditingController();
+  final _matchController = TextEditingController();
   var _loading = false;
 
-  Future<void> _startGame() async {
+  Future<void> _joinGame() async {
     if (mounted) setState(() {});
     _loading = true;
     try {
       final name = _nameController.text.trim();
+      final matchId = int.parse(_matchController.text.trim());
 
       GlobalState.setUserName(name);
 
-      final matchId = await Storage.createGame(
-        ownerName: name,
+      await Storage.joinGame(
+        playerName: name,
+        matchId: matchId,
       );
 
       GlobalState.setCurrentMatchId(matchId);
 
       Navigator.of(context).push(
         MaterialPageRoute(
-          builder: (_) => const WaitRestPage(),
-          settings: const RouteSettings(name: 'WaitRestPage'),
+          builder: (_) => const PlayerWaitRestPage(),
+          settings: const RouteSettings(name: 'PlayerWaitRestPage'),
         ),
       );
     } catch (e) {
@@ -72,16 +75,30 @@ class _InitPageState extends State<InitPage> {
                 },
               ),
               const SizedBox(height: 24),
+              TextField(
+                controller: _matchController,
+                decoration: const InputDecoration(
+                  labelText: 'Ingresá el número de la partida',
+                  hintText: '123456',
+                ),
+                keyboardType: TextInputType.number,
+                textInputAction: TextInputAction.done,
+                onChanged: (value) {
+                  if (mounted) setState(() {});
+                },
+              ),
+              const SizedBox(height: 24),
               Row(
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.end,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   ElevatedButton(
-                    onPressed:
-                        _nameController.text.trim().isNotEmpty && !_loading
-                            ? _startGame
-                            : null,
+                    onPressed: _nameController.text.trim().isNotEmpty &&
+                            _matchController.text.trim().isNotEmpty &&
+                            !_loading
+                        ? _joinGame
+                        : null,
                     child: _loading
                         ? const CircularProgressIndicator(strokeWidth: 1)
                         : const Text('Continuar'),
