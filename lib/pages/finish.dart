@@ -43,7 +43,7 @@ class _FinishPageState extends State<FinishPage> {
       var deviation = 10;
 
       // Get potential winners
-      while (potentialWinners.isEmpty && deviation < 100) {
+      while (potentialWinners.isEmpty && deviation < 30) {
         for (var player in match['players']) {
           final _r = player['r'];
           final _g = player['g'];
