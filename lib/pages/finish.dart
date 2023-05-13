@@ -18,6 +18,7 @@ class FinishPage extends StatefulWidget {
 class _FinishPageState extends State<FinishPage> {
   StreamSubscription? _subscription;
   String _winner = '';
+  bool _noWinner = false;
 
   void _startNextRound() async {
     final newChooser = _winner.isNotEmpty ? _winner : GlobalState.userName!;
@@ -43,7 +44,7 @@ class _FinishPageState extends State<FinishPage> {
       var deviation = 10;
 
       // Get potential winners
-      while (potentialWinners.isEmpty && deviation < 30) {
+      while (potentialWinners.isEmpty && deviation < 40) {
         for (var player in match['players']) {
           final _r = player['r'];
           final _g = player['g'];
@@ -88,6 +89,8 @@ class _FinishPageState extends State<FinishPage> {
             ),
           ),
         );
+        _noWinner = true;
+        if (mounted) setState(() {});
       }
     }
   }
@@ -190,7 +193,7 @@ class _FinishPageState extends State<FinishPage> {
                               ),
                             const SizedBox(height: 32),
                             Text(
-                              'Ganó: $_winner',
+                              _noWinner ? 'No ganó nadie' : 'Ganó: $_winner',
                               textAlign: TextAlign.center,
                               style: const TextStyle(
                                 fontSize: 32,
