@@ -43,53 +43,55 @@ class _ChooserWaitsPageState extends State<ChooserWaitsPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(),
-      body: SizedBox(
-        width: MediaQuery.of(context).size.width,
-        child: Column(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            ColorSection(
-              playerName: GlobalState.userName!,
-              r: GlobalState.r!,
-              g: GlobalState.g!,
-              b: GlobalState.b!,
-            ),
-            Expanded(
-              child: StreamBuilder<DocumentSnapshot>(
-                stream: Storage.getStream(),
-                builder: (context, snapshot) {
-                  if (snapshot.data?.data() != null) {
-                    final data = snapshot.data!.data() as Map;
-                    final players = data['players'] as List;
-                    return Column(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        for (var item in players)
-                          if (item['name'] != null &&
-                              item['r'] != null &&
-                              item['g'] != null &&
-                              item['b'] != null)
-                            ColorSection(
-                              playerName: item['name'] as String,
-                              r: item['r'] as int,
-                              g: item['g'] as int,
-                              b: item['b'] as int,
-                            ),
-                      ],
-                    );
-                  }
-
-                  return const SizedBox.shrink();
-                },
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: Scaffold(
+        body: SizedBox(
+          width: MediaQuery.of(context).size.width,
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              ColorSection(
+                playerName: GlobalState.userName!,
+                r: GlobalState.r!,
+                g: GlobalState.g!,
+                b: GlobalState.b!,
               ),
-            ),
-          ],
+              Expanded(
+                child: StreamBuilder<DocumentSnapshot>(
+                  stream: Storage.getStream(),
+                  builder: (context, snapshot) {
+                    if (snapshot.data?.data() != null) {
+                      final data = snapshot.data!.data() as Map;
+                      final players = data['players'] as List;
+                      return Column(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          for (var item in players)
+                            if (item['name'] != null &&
+                                item['r'] != null &&
+                                item['g'] != null &&
+                                item['b'] != null)
+                              ColorSection(
+                                playerName: item['name'] as String,
+                                r: item['r'] as int,
+                                g: item['g'] as int,
+                                b: item['b'] as int,
+                              ),
+                        ],
+                      );
+                    }
+
+                    return const SizedBox.shrink();
+                  },
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

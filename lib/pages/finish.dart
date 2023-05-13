@@ -135,103 +135,106 @@ class _FinishPageState extends State<FinishPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(),
-      body: SizedBox(
-        width: MediaQuery.of(context).size.width,
-        child: Column(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            const Text(
-              'Partida terminada!',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 32,
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: Scaffold(
+        body: SizedBox(
+          width: MediaQuery.of(context).size.width,
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              const Text(
+                'Partida terminada!',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 32,
+                ),
               ),
-            ),
-            const SizedBox(height: 32),
-            Expanded(
-              child: StreamBuilder<DocumentSnapshot>(
-                stream: Storage.getStream(),
-                builder: (context, snapshot) {
-                  if (snapshot.data?.data() != null) {
-                    final data = snapshot.data!.data() as Map<String, dynamic>;
+              const SizedBox(height: 32),
+              Expanded(
+                child: StreamBuilder<DocumentSnapshot>(
+                  stream: Storage.getStream(),
+                  builder: (context, snapshot) {
+                    if (snapshot.data?.data() != null) {
+                      final data =
+                          snapshot.data!.data() as Map<String, dynamic>;
 
-                    if (data['started'] == true && data['finished'] == true) {
-                      final chooser = data['chooser'];
-                      final isChooser = chooser == GlobalState.userName;
-                      final r = data['r'];
-                      final g = data['g'];
-                      final b = data['b'];
+                      if (data['started'] == true && data['finished'] == true) {
+                        final chooser = data['chooser'];
+                        final isChooser = chooser == GlobalState.userName;
+                        final r = data['r'];
+                        final g = data['g'];
+                        final b = data['b'];
 
-                      final players = data['players'] as List;
-                      return Column(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          ColorSection(
-                            playerName: chooser as String,
-                            r: r as int,
-                            g: g as int,
-                            b: b as int,
-                          ),
-                          const SizedBox(height: 16),
-                          for (var item in players)
+                        final players = data['players'] as List;
+                        return Column(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
                             ColorSection(
-                              playerName: item['name'] as String,
-                              r: item['r'] as int,
-                              g: item['g'] as int,
-                              b: item['b'] as int,
+                              playerName: chooser as String,
+                              r: r as int,
+                              g: g as int,
+                              b: b as int,
                             ),
-                          const SizedBox(height: 32),
-                          Text(
-                            'Ganó: $_winner',
-                            textAlign: TextAlign.center,
-                            style: const TextStyle(
-                              fontSize: 32,
-                            ),
-                          ),
-                          const SizedBox(height: 32),
-                          if (isChooser)
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 20),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  const Align(
-                                    alignment: Alignment.bottomRight,
-                                    child: Text(
-                                      'Apretá continuar para iniciar la siguiente ronda',
-                                      textAlign: TextAlign.right,
-                                    ),
-                                  ),
-                                  const SizedBox(height: 16),
-                                  Align(
-                                    alignment: Alignment.bottomRight,
-                                    child: ElevatedButton(
-                                      onPressed: _startNextRound,
-                                      child: const Text('Continuar'),
-                                    ),
-                                  ),
-                                  const SizedBox(height: 32),
-                                ],
+                            const SizedBox(height: 16),
+                            for (var item in players)
+                              ColorSection(
+                                playerName: item['name'] as String,
+                                r: item['r'] as int,
+                                g: item['g'] as int,
+                                b: item['b'] as int,
+                              ),
+                            const SizedBox(height: 32),
+                            Text(
+                              'Ganó: $_winner',
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(
+                                fontSize: 32,
                               ),
                             ),
-                        ],
-                      );
+                            const SizedBox(height: 32),
+                            if (isChooser)
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 20),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    const Align(
+                                      alignment: Alignment.bottomRight,
+                                      child: Text(
+                                        'Apretá continuar para iniciar la siguiente ronda',
+                                        textAlign: TextAlign.right,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 16),
+                                    Align(
+                                      alignment: Alignment.bottomRight,
+                                      child: ElevatedButton(
+                                        onPressed: _startNextRound,
+                                        child: const Text('Continuar'),
+                                      ),
+                                    ),
+                                    const SizedBox(height: 32),
+                                  ],
+                                ),
+                              ),
+                          ],
+                        );
+                      }
                     }
-                  }
 
-                  return const SizedBox.shrink();
-                },
+                    return const SizedBox.shrink();
+                  },
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

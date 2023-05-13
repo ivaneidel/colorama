@@ -43,13 +43,9 @@ class _ChooserPageState extends State<ChooserPage> {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: () => willPop(context),
+      onWillPop: () async => false,
       child: Scaffold(
         backgroundColor: _backgroundColor,
-        appBar: AppBar(
-          backgroundColor: _backgroundColor,
-          foregroundColor: getTextColor(_backgroundColor),
-        ),
         body: SizedBox(
           width: MediaQuery.of(context).size.width,
           child: Padding(

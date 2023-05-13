@@ -42,9 +42,8 @@ class _PlayerWaitFinishPageState extends State<PlayerWaitFinishPage> {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: () async => true, // willPop(context),
+      onWillPop: () async => false,
       child: Scaffold(
-        appBar: AppBar(),
         body: SizedBox(
           width: MediaQuery.of(context).size.width,
           child: Padding(

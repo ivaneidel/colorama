@@ -45,9 +45,8 @@ class _WaitChooserPageState extends State<WaitChooserPage> {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: () => willPop(context),
+      onWillPop: () async => false,
       child: Scaffold(
-        appBar: AppBar(),
         body: StreamBuilder<DocumentSnapshot>(
             stream: Storage.getStream(),
             builder: (context, snapshot) {

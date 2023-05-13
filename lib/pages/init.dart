@@ -49,46 +49,48 @@ class _InitPageState extends State<InitPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(),
-      body: SizedBox(
-        width: MediaQuery.of(context).size.width,
-        child: Padding(
-          padding: const EdgeInsets.all(20),
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              TextField(
-                controller: _nameController,
-                decoration: const InputDecoration(
-                  labelText: 'Ingresá tu nombre',
-                  hintText: 'Marcelo',
-                ),
-                textInputAction: TextInputAction.done,
-                onChanged: (value) {
-                  if (mounted) setState(() {});
-                },
-              ),
-              const SizedBox(height: 24),
-              Row(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.end,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  ElevatedButton(
-                    onPressed:
-                        _nameController.text.trim().isNotEmpty && !_loading
-                            ? _startGame
-                            : null,
-                    child: _loading
-                        ? const CircularProgressIndicator(strokeWidth: 1)
-                        : const Text('Continuar'),
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: Scaffold(
+        body: SizedBox(
+          width: MediaQuery.of(context).size.width,
+          child: Padding(
+            padding: const EdgeInsets.all(20),
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                TextField(
+                  controller: _nameController,
+                  decoration: const InputDecoration(
+                    labelText: 'Ingresá tu nombre',
+                    hintText: 'Marcelo',
                   ),
-                ],
-              ),
-            ],
+                  textInputAction: TextInputAction.done,
+                  onChanged: (value) {
+                    if (mounted) setState(() {});
+                  },
+                ),
+                const SizedBox(height: 24),
+                Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    ElevatedButton(
+                      onPressed:
+                          _nameController.text.trim().isNotEmpty && !_loading
+                              ? _startGame
+                              : null,
+                      child: _loading
+                          ? const CircularProgressIndicator(strokeWidth: 1)
+                          : const Text('Continuar'),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),
