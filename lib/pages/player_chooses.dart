@@ -33,7 +33,7 @@ class _PlayerChoosesPageState extends State<PlayerChoosesPage> {
 
     await Storage.guessColor(matchId: GlobalState.currentMatchId!);
 
-    Navigator.of(context).push(
+    Navigator.of(context).pushReplacement(
       MaterialPageRoute(
         builder: (_) => const PlayerWaitFinishPage(),
         settings: const RouteSettings(name: 'PlayerWaitFinishPage'),

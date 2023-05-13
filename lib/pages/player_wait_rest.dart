@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:colorama/configuration/helpers.dart';
 import 'package:colorama/configuration/state.dart';
 import 'package:colorama/configuration/storage.dart';
@@ -12,15 +14,17 @@ class PlayerWaitRestPage extends StatefulWidget {
 }
 
 class _PlayerWaitRestPageState extends State<PlayerWaitRestPage> {
+  StreamSubscription? _subscription;
+
   @override
   void initState() {
     super.initState();
-    Storage.getStream().listen((snapshot) {
+    _subscription = Storage.getStream().listen((snapshot) {
       final data = snapshot.data() as Map;
       final started = data['started'];
 
       if (started == true) {
-        Navigator.of(context).push(
+        Navigator.of(context).pushReplacement(
           MaterialPageRoute(
             builder: (_) => const WaitChooserPage(),
             settings: const RouteSettings(name: 'WaitChooserPage'),
@@ -28,6 +32,12 @@ class _PlayerWaitRestPageState extends State<PlayerWaitRestPage> {
         );
       }
     });
+  }
+
+  @override
+  void dispose() {
+    _subscription?.cancel();
+    super.dispose();
   }
 
   @override

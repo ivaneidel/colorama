@@ -76,16 +76,22 @@ abstract class Storage {
       if (match != null) {
         _firebaseDocId = match.id;
 
-        final newMatch = match.data();
-
-        await _db.collection('matches').doc(match.id).update(
-          {
-            'players': [
-              ...newMatch['players'],
-              {'name': playerName}
-            ],
-          },
+        final nameDupped = (match.data()['players'] as List).any(
+          (player) => player['name'] == playerName,
         );
+
+        if (!nameDupped) {
+          await _db.collection('matches').doc(match.id).update(
+            {
+              'players': [
+                ...match.data()['players'],
+                {'name': playerName}
+              ],
+            },
+          );
+        } else {
+          throw "Ya existe un jugador con el mismo nombre";
+        }
       } else {
         throw "La partida no existe";
       }
@@ -133,6 +139,49 @@ abstract class Storage {
             'finished': finished,
           },
         );
+      } else {
+        throw "La partida no existe";
+      }
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  static Future<void> startNextRound({
+    required int matchId,
+    required String newChooser,
+  }) async {
+    try {
+      final matches = await _db.collection('matches').get();
+
+      final match = matches.docs.firstWhereOrNull(
+        (element) => element.data()['id'] == matchId,
+      );
+
+      if (match != null) {
+        _firebaseDocId = match.id;
+
+        final nobodyWon = newChooser == match['chooser'];
+
+        final newMatch = {
+          'chooser': newChooser,
+          'started': false,
+          'finished': false,
+          'r': null,
+          'g': null,
+          'b': null,
+          'players': [],
+        };
+
+        for (var player in match.data()['players']) {
+          if (!nobodyWon && player['name'] == newChooser) {
+            (newMatch['players'] as List).add({'name': match['chooser']});
+          } else {
+            (newMatch['players'] as List).add({'name': player['name']});
+          }
+        }
+
+        await _db.collection('matches').doc(match.id).update({...newMatch});
       } else {
         throw "La partida no existe";
       }

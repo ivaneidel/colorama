@@ -31,7 +31,7 @@ class JoinPageState extends State<JoinPage> {
 
       GlobalState.setCurrentMatchId(matchId);
 
-      Navigator.of(context).push(
+      Navigator.of(context).pushReplacement(
         MaterialPageRoute(
           builder: (_) => const PlayerWaitRestPage(),
           settings: const RouteSettings(name: 'PlayerWaitRestPage'),
@@ -41,7 +41,7 @@ class JoinPageState extends State<JoinPage> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(
-            'Ocurrió un error ${e.toString()}',
+            'Ocurrió un error: ${e.toString()}',
           ),
         ),
       );

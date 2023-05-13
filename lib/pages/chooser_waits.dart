@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:colorama/configuration/helpers.dart';
 import 'package:colorama/configuration/state.dart';
@@ -13,15 +15,17 @@ class ChooserWaitsPage extends StatefulWidget {
 }
 
 class _ChooserWaitsPageState extends State<ChooserWaitsPage> {
+  StreamSubscription? _subscription;
+
   @override
   void initState() {
     super.initState();
-    Storage.getStream().listen((snapshot) {
+    _subscription = Storage.getStream().listen((snapshot) {
       final data = snapshot.data() as Map;
       final finished = data['finished'];
 
       if (finished == true) {
-        Navigator.of(context).push(
+        Navigator.of(context).pushReplacement(
           MaterialPageRoute(
             builder: (_) => const FinishPage(),
             settings: const RouteSettings(name: 'FinishPage'),
@@ -29,6 +33,12 @@ class _ChooserWaitsPageState extends State<ChooserWaitsPage> {
         );
       }
     });
+  }
+
+  @override
+  void dispose() {
+    _subscription?.cancel();
+    super.dispose();
   }
 
   @override

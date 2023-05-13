@@ -32,7 +32,7 @@ class _ChooserPageState extends State<ChooserPage> {
 
     Storage.startGame(matchId: GlobalState.currentMatchId!);
 
-    Navigator.of(context).push(
+    Navigator.of(context).pushReplacement(
       MaterialPageRoute(
         builder: (_) => const ChooserWaitsPage(),
         settings: const RouteSettings(name: 'ChooserWaitsPage'),

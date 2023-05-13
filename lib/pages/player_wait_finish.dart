@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:colorama/configuration/helpers.dart';
 import 'package:colorama/configuration/storage.dart';
 import 'package:colorama/pages/finish.dart';
@@ -11,15 +13,17 @@ class PlayerWaitFinishPage extends StatefulWidget {
 }
 
 class _PlayerWaitFinishPageState extends State<PlayerWaitFinishPage> {
+  StreamSubscription? _subscription;
+
   @override
   void initState() {
     super.initState();
-    Storage.getStream().listen((snapshot) {
+    _subscription = Storage.getStream().listen((snapshot) {
       final data = snapshot.data() as Map;
       final finished = data['finished'];
 
       if (finished == true) {
-        Navigator.of(context).push(
+        Navigator.of(context).pushReplacement(
           MaterialPageRoute(
             builder: (_) => const FinishPage(),
             settings: const RouteSettings(name: 'FinishPage'),
@@ -27,6 +31,12 @@ class _PlayerWaitFinishPageState extends State<PlayerWaitFinishPage> {
         );
       }
     });
+  }
+
+  @override
+  void dispose() {
+    _subscription?.cancel();
+    super.dispose();
   }
 
   @override

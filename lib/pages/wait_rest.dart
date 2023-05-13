@@ -13,7 +13,7 @@ class WaitRestPage extends StatelessWidget {
       final matchId = GlobalState.currentMatchId!;
       await Storage.startGame(matchId: matchId);
 
-      Navigator.of(context).push(
+      Navigator.of(context).pushReplacement(
         MaterialPageRoute(
           builder: (_) => const ChooserPage(),
           settings: const RouteSettings(name: 'ChooserPage'),
@@ -23,7 +23,7 @@ class WaitRestPage extends StatelessWidget {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(
-            'Ocurrió un error ${e.toString()}',
+            'Ocurrió un error: ${e.toString()}',
           ),
         ),
       );

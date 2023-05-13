@@ -28,7 +28,7 @@ class _InitPageState extends State<InitPage> {
 
       GlobalState.setCurrentMatchId(matchId);
 
-      Navigator.of(context).push(
+      Navigator.of(context).pushReplacement(
         MaterialPageRoute(
           builder: (_) => const WaitRestPage(),
           settings: const RouteSettings(name: 'WaitRestPage'),
@@ -38,7 +38,7 @@ class _InitPageState extends State<InitPage> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(
-            'Ocurrió un error ${e.toString()}',
+            'Ocurrió un error: ${e.toString()}',
           ),
         ),
       );
