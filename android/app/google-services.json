@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "1039328309765",
+    "project_id": "rgb-colorama",
+    "storage_bucket": "rgb-colorama.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1039328309765:android:d645f8da2701604cc5a26c",
+        "android_client_info": {
+          "package_name": "eth.ivancito.colorama"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1039328309765-5e3476ddldhfo91omtelv9c8khmsf0sk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBCa-Y2NCBwZOCaARcI6gL4_OZP83f-1Ig"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1039328309765-5e3476ddldhfo91omtelv9c8khmsf0sk.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1039328309765-0fs12tphdfddn5cg4knpn8knu291kqpp.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "eth.ivancito.colorama"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
