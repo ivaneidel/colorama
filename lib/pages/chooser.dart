@@ -1,5 +1,7 @@
 import 'package:colorama/configuration/colors.dart';
 import 'package:colorama/configuration/helpers.dart';
+import 'package:colorama/configuration/state.dart';
+import 'package:colorama/pages/chooser_waits.dart';
 import 'package:flutter/material.dart';
 
 class ChooserPage extends StatefulWidget {
@@ -22,11 +24,17 @@ class _ChooserPageState extends State<ChooserPage> {
     return Color.fromARGB(255, r, g, b);
   }
 
-  Color get _textColor {
-    return ThemeData.estimateBrightnessForColor(_backgroundColor) ==
-            Brightness.light
-        ? Colors.black
-        : Colors.white;
+  void _continue() {
+    GlobalState.setR((_r * 255).toInt());
+    GlobalState.setG((_g * 255).toInt());
+    GlobalState.setB((_b * 255).toInt());
+
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) => const ChooserWaitsPage(),
+        settings: const RouteSettings(name: 'ChooserWaitsPage'),
+      ),
+    );
   }
 
   @override
@@ -37,7 +45,7 @@ class _ChooserPageState extends State<ChooserPage> {
         backgroundColor: _backgroundColor,
         appBar: AppBar(
           backgroundColor: _backgroundColor,
-          foregroundColor: _textColor,
+          foregroundColor: getTextColor(_backgroundColor),
         ),
         body: SizedBox(
           width: MediaQuery.of(context).size.width,
@@ -51,14 +59,15 @@ class _ChooserPageState extends State<ChooserPage> {
                 const Expanded(child: SizedBox.shrink()),
                 Text(
                   'Definí el color de la ronda',
-                  style: TextStyle(fontSize: 24, color: _textColor),
+                  style: TextStyle(
+                      fontSize: 24, color: getTextColor(_backgroundColor)),
                 ),
                 const SizedBox(height: 24),
                 ColorSlider(
                   label: 'R',
                   value: _r,
                   color: rColor,
-                  textColor: _textColor,
+                  textColor: getTextColor(_backgroundColor),
                   onChanged: (value) {
                     _r = value;
                     if (mounted) setState(() {});
@@ -69,7 +78,7 @@ class _ChooserPageState extends State<ChooserPage> {
                   label: 'G',
                   value: _g,
                   color: gColor,
-                  textColor: _textColor,
+                  textColor: getTextColor(_backgroundColor),
                   onChanged: (value) {
                     _g = value;
                     if (mounted) setState(() {});
@@ -80,7 +89,7 @@ class _ChooserPageState extends State<ChooserPage> {
                   label: 'B',
                   value: _b,
                   color: bColor,
-                  textColor: _textColor,
+                  textColor: getTextColor(_backgroundColor),
                   onChanged: (value) {
                     _b = value;
                     if (mounted) setState(() {});
@@ -92,19 +101,14 @@ class _ChooserPageState extends State<ChooserPage> {
                   child: Text(
                     'Cuando hayas terminado, apretá continuar',
                     textAlign: TextAlign.right,
-                    style: TextStyle(color: _textColor),
+                    style: TextStyle(color: getTextColor(_backgroundColor)),
                   ),
                 ),
                 const SizedBox(height: 16),
                 Align(
                   alignment: Alignment.bottomRight,
                   child: ElevatedButton(
-                    onPressed: () => Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (_) => const ChooserPage(),
-                        settings: const RouteSettings(name: 'ChooserPage'),
-                      ),
-                    ),
+                    onPressed: _continue,
                     child: const Text('Continuar'),
                   ),
                 ),

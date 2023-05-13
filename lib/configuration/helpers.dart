@@ -24,3 +24,10 @@ Future<bool> willPop(BuildContext context) async {
 
   return false;
 }
+
+Color getTextColor(Color backgroundColor) {
+  return ThemeData.estimateBrightnessForColor(backgroundColor) ==
+          Brightness.light
+      ? Colors.black
+      : Colors.white;
+}
