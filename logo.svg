@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="89.346336mm"
+   height="89.346336mm"
+   viewBox="0 0 89.346336 89.346337"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.1.2 (0a00cf5339, 2022-02-04)"
+   sodipodi:docname="logo.svg"
+   inkscape:export-filename="/home/ivan/Programming/Flutter/colorama/web/favicon.png"
+   inkscape:export-xdpi="4.5500002"
+   inkscape:export-ydpi="4.5500002"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="0.82492985"
+     inkscape:cx="99.402391"
+     inkscape:cy="220.01871"
+     inkscape:window-width="1920"
+     inkscape:window-height="1136"
+     inkscape:window-x="0"
+     inkscape:window-y="27"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs2">
+    <filter
+       inkscape:collect="always"
+       style="color-interpolation-filters:sRGB"
+       id="filter8772"
+       x="-0.0084110166"
+       y="-0.020931458"
+       width="1.016822"
+       height="1.0418629">
+      <feGaussianBlur
+         inkscape:collect="always"
+         stdDeviation="0.22558572"
+         id="feGaussianBlur8774" />
+    </filter>
+  </defs>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-58.783493,-84.254753)">
+    <g
+       id="g8752"
+       transform="translate(1.0583333,1.0583333)"
+       style="fill:#000000;filter:url(#filter8772)">
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:42.3333px;line-height:1.25;font-family:FreeMono;-inkscape-font-specification:'FreeMono, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.714213"
+         x="70.933662"
+         y="140.7952"
+         id="text8742"><tspan
+           sodipodi:role="line"
+           id="tspan8740"
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:42.3333px;font-family:FreeMono;-inkscape-font-specification:'FreeMono, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke-width:0.714213"
+           x="70.933662"
+           y="140.7952">R</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:42.3333px;line-height:1.25;font-family:FreeMono;-inkscape-font-specification:'FreeMono, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.714213"
+         x="90.948853"
+         y="140.78125"
+         id="text8746"><tspan
+           sodipodi:role="line"
+           id="tspan8744"
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:42.3333px;font-family:FreeMono;-inkscape-font-specification:'FreeMono, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke-width:0.714213"
+           x="90.948853"
+           y="140.78125">G</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:42.3333px;line-height:1.25;font-family:FreeMono;-inkscape-font-specification:'FreeMono, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.714213"
+         x="111.25699"
+         y="140.7952"
+         id="text8750"><tspan
+           sodipodi:role="line"
+           id="tspan8748"
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:42.3333px;font-family:FreeMono;-inkscape-font-specification:'FreeMono, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke-width:0.714213"
+           x="111.25699"
+           y="140.7952">B</tspan></text>
+    </g>
+    <g
+       id="g8738">
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:42.33330104px;line-height:1.25;font-family:FreeMono;-inkscape-font-specification:'FreeMono, Bold';letter-spacing:0px;word-spacing:0px;fill:#ff0000;fill-opacity:1;stroke:none;stroke-width:0.714213;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal"
+         x="70.933662"
+         y="140.7952"
+         id="text1530"><tspan
+           sodipodi:role="line"
+           id="tspan1528"
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:42.33330104px;font-family:FreeMono;-inkscape-font-specification:'FreeMono, Bold';stroke-width:0.714213;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#ff0000;fill-opacity:1"
+           x="70.933662"
+           y="140.7952">R</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:42.33330104px;line-height:1.25;font-family:FreeMono;-inkscape-font-specification:'FreeMono, Bold';letter-spacing:0px;word-spacing:0px;fill:#00ff00;fill-opacity:1;stroke:none;stroke-width:0.714213;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal"
+         x="90.948853"
+         y="140.78125"
+         id="text3052"><tspan
+           sodipodi:role="line"
+           id="tspan3050"
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:42.33330104px;font-family:FreeMono;-inkscape-font-specification:'FreeMono, Bold';stroke-width:0.714213;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#00ff00;fill-opacity:1"
+           x="90.948853"
+           y="140.78125">G</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:42.33330104px;line-height:1.25;font-family:FreeMono;-inkscape-font-specification:'FreeMono, Bold';letter-spacing:0px;word-spacing:0px;fill:#0000ff;fill-opacity:1;stroke:none;stroke-width:0.714213;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal"
+         x="111.25699"
+         y="140.7952"
+         id="text3166"><tspan
+           sodipodi:role="line"
+           id="tspan3164"
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:42.33330104px;font-family:FreeMono;-inkscape-font-specification:'FreeMono, Bold';stroke-width:0.714213;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#0000ff;fill-opacity:1"
+           x="111.25699"
+           y="140.7952">B</tspan></text>
+    </g>
+  </g>
+</svg>

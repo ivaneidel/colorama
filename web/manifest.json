@@ -1,11 +1,11 @@
 {
-    "name": "colorama",
+    "name": "Colorama (RGB)",
     "short_name": "colorama",
     "start_url": ".",
     "display": "standalone",
-    "background_color": "#0175C2",
-    "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "background_color": "#1c1b1f00",
+    "theme_color": "#1c1b1f00",
+    "description": "A simple RGB game.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [
