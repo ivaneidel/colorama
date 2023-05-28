@@ -37,26 +37,32 @@ abstract class Storage {
     required int matchId,
   }) async {
     try {
-      final matches = await _db.collection('matches').get();
+      await _db.runTransaction((transaction) async {
+        final matches = await _db.collection('matches').get();
 
-      final match = matches.docs.firstWhereOrNull(
-        (element) => element.data()['id'] == matchId,
-      );
-
-      if (match != null) {
-        _firebaseDocId = match.id;
-
-        await _db.collection('matches').doc(match.id).update(
-          {
-            'started': true,
-            'r': GlobalState.r,
-            'g': GlobalState.g,
-            'b': GlobalState.b,
-          },
+        final match = matches.docs.firstWhereOrNull(
+          (element) => element.data()['id'] == matchId,
         );
-      } else {
-        throw "La partida no existe";
-      }
+
+        if (match != null) {
+          _firebaseDocId = match.id;
+
+          final docRef = _db.collection('matches').doc(match.id);
+          final snapshot = await transaction.get(docRef);
+
+          transaction.update(
+            snapshot.reference,
+            {
+              'started': true,
+              'r': GlobalState.r,
+              'g': GlobalState.g,
+              'b': GlobalState.b,
+            },
+          );
+        } else {
+          throw "La partida no existe";
+        }
+      }, maxAttempts: 10);
     } catch (e) {
       rethrow;
     }
@@ -67,34 +73,39 @@ abstract class Storage {
     required int matchId,
   }) async {
     try {
-      final matches = await _db.collection('matches').get();
+      await _db.runTransaction((transaction) async {
+        final matches = await _db.collection('matches').get();
 
-      final match = matches.docs.firstWhereOrNull(
-        (element) => element.data()['id'] == matchId,
-      );
-
-      if (match != null) {
-        _firebaseDocId = match.id;
-
-        final nameDupped = (match.data()['players'] as List).any(
-          (player) => player['name'] == playerName,
+        final match = matches.docs.firstWhereOrNull(
+          (element) => element.data()['id'] == matchId,
         );
 
-        if (!nameDupped) {
-          await _db.collection('matches').doc(match.id).update(
-            {
-              'players': [
-                ...match.data()['players'],
-                {'name': playerName}
-              ],
-            },
+        if (match != null) {
+          _firebaseDocId = match.id;
+          final docRef = _db.collection('matches').doc(match.id);
+          final snapshot = await transaction.get(docRef);
+
+          final nameDupped = (snapshot.get('players') as List).any(
+            (player) => player['name'] == playerName,
           );
+
+          if (!nameDupped) {
+            transaction.update(
+              snapshot.reference,
+              {
+                'players': [
+                  ...snapshot.get('players'),
+                  {'name': playerName}
+                ],
+              },
+            );
+          } else {
+            throw "Ya existe un jugador con el mismo nombre";
+          }
         } else {
-          throw "Ya existe un jugador con el mismo nombre";
+          throw "La partida no existe";
         }
-      } else {
-        throw "La partida no existe";
-      }
+      }, maxAttempts: 10);
     } catch (e) {
       rethrow;
     }
@@ -104,44 +115,51 @@ abstract class Storage {
     required int matchId,
   }) async {
     try {
-      final matches = await _db.collection('matches').get();
+      await _db.runTransaction((transaction) async {
+        final matches = await _db.collection('matches').get();
 
-      final match = matches.docs.firstWhereOrNull(
-        (element) => element.data()['id'] == matchId,
-      );
+        final match = matches.docs.firstWhereOrNull(
+          (element) => element.data()['id'] == matchId,
+        );
 
-      if (match != null) {
-        _firebaseDocId = match.id;
+        if (match != null) {
+          _firebaseDocId = match.id;
+          final docRef = _db.collection('matches').doc(match.id);
+          final snapshot = await transaction.get(docRef);
 
-        final newPlayers = [];
+          final newPlayers = [];
 
-        for (var player in match.data()['players']) {
-          if (player['name'] == GlobalState.userName) {
-            newPlayers.add({
-              'name': GlobalState.userName,
-              'r': GlobalState.r,
-              'g': GlobalState.g,
-              'b': GlobalState.b,
-            });
-          } else {
-            newPlayers.add(player);
+          for (var player in snapshot.get('players')) {
+            if (player['name'] == GlobalState.userName) {
+              newPlayers.add({
+                'name': GlobalState.userName,
+                'r': GlobalState.r,
+                'g': GlobalState.g,
+                'b': GlobalState.b,
+              });
+            } else {
+              newPlayers.add(player);
+            }
           }
+
+          final finished = newPlayers.every(
+            (player) =>
+                player['r'] != null &&
+                player['g'] != null &&
+                player['b'] != null,
+          );
+
+          transaction.update(
+            snapshot.reference,
+            {
+              'players': newPlayers,
+              'finished': finished,
+            },
+          );
+        } else {
+          throw "La partida no existe";
         }
-
-        final finished = newPlayers.every(
-          (player) =>
-              player['r'] != null && player['g'] != null && player['b'] != null,
-        );
-
-        await _db.collection('matches').doc(match.id).update(
-          {
-            'players': newPlayers,
-            'finished': finished,
-          },
-        );
-      } else {
-        throw "La partida no existe";
-      }
+      }, maxAttempts: 10);
     } catch (e) {
       rethrow;
     }
@@ -152,39 +170,43 @@ abstract class Storage {
     required String newChooser,
   }) async {
     try {
-      final matches = await _db.collection('matches').get();
+      await _db.runTransaction((transaction) async {
+        final matches = await _db.collection('matches').get();
 
-      final match = matches.docs.firstWhereOrNull(
-        (element) => element.data()['id'] == matchId,
-      );
+        final match = matches.docs.firstWhereOrNull(
+          (element) => element.data()['id'] == matchId,
+        );
 
-      if (match != null) {
-        _firebaseDocId = match.id;
+        if (match != null) {
+          _firebaseDocId = match.id;
+          final docRef = _db.collection('matches').doc(match.id);
+          final snapshot = await transaction.get(docRef);
 
-        final nobodyWon = newChooser == match['chooser'];
+          final nobodyWon = newChooser == snapshot.get('chooser');
 
-        final newMatch = {
-          'chooser': newChooser,
-          'started': false,
-          'finished': false,
-          'r': null,
-          'g': null,
-          'b': null,
-          'players': [],
-        };
+          final newMatch = {
+            'chooser': newChooser,
+            'started': false,
+            'finished': false,
+            'r': null,
+            'g': null,
+            'b': null,
+            'players': [],
+          };
 
-        for (var player in match.data()['players']) {
-          if (!nobodyWon && player['name'] == newChooser) {
-            (newMatch['players'] as List).add({'name': match['chooser']});
-          } else {
-            (newMatch['players'] as List).add({'name': player['name']});
+          for (var player in match.get('players')) {
+            if (!nobodyWon && player['name'] == newChooser) {
+              (newMatch['players'] as List).add({'name': match.get('chooser')});
+            } else {
+              (newMatch['players'] as List).add({'name': player['name']});
+            }
           }
-        }
 
-        await _db.collection('matches').doc(match.id).update({...newMatch});
-      } else {
-        throw "La partida no existe";
-      }
+          transaction.update(snapshot.reference, {...newMatch});
+        } else {
+          throw "La partida no existe";
+        }
+      }, maxAttempts: 10);
     } catch (e) {
       rethrow;
     }

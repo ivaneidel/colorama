@@ -16,11 +16,14 @@ class FinishPage extends StatefulWidget {
 }
 
 class _FinishPageState extends State<FinishPage> {
+  var _loading = false;
   StreamSubscription? _subscription;
   String _winner = '';
   bool _noWinner = false;
 
   void _startNextRound() async {
+    _loading = true;
+    if (mounted) setState(() {});
     final newChooser = _winner.isNotEmpty ? _winner : GlobalState.userName!;
     if (_winner.isEmpty) {
       _winner = GlobalState.userName!;
@@ -31,6 +34,8 @@ class _FinishPageState extends State<FinishPage> {
       matchId: GlobalState.currentMatchId!,
       newChooser: newChooser,
     );
+    _loading = false;
+    if (mounted) setState(() {});
   }
 
   void _computeWinner(Map<String, dynamic> match) {
@@ -219,7 +224,8 @@ class _FinishPageState extends State<FinishPage> {
                                     Align(
                                       alignment: Alignment.bottomRight,
                                       child: ElevatedButton(
-                                        onPressed: _startNextRound,
+                                        onPressed:
+                                            _loading ? null : _startNextRound,
                                         child: const Text('Continuar'),
                                       ),
                                     ),

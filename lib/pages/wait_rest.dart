@@ -5,10 +5,19 @@ import 'package:colorama/configuration/storage.dart';
 import 'package:colorama/pages/chooser.dart';
 import 'package:flutter/material.dart';
 
-class WaitRestPage extends StatelessWidget {
+class WaitRestPage extends StatefulWidget {
   const WaitRestPage({super.key});
 
+  @override
+  State<WaitRestPage> createState() => _WaitRestPageState();
+}
+
+class _WaitRestPageState extends State<WaitRestPage> {
+  var _loading = false;
+
   Future<void> _startGame(BuildContext context) async {
+    _loading = true;
+    if (mounted) setState(() {});
     try {
       final matchId = GlobalState.currentMatchId!;
       await Storage.startGame(matchId: matchId);
@@ -28,6 +37,8 @@ class WaitRestPage extends StatelessWidget {
         ),
       );
     }
+    _loading = false;
+    if (mounted) setState(() {});
   }
 
   @override
@@ -113,7 +124,7 @@ class WaitRestPage extends StatelessWidget {
                 Align(
                   alignment: Alignment.bottomRight,
                   child: ElevatedButton(
-                    onPressed: () => _startGame(context),
+                    onPressed: _loading ? null : () => _startGame(context),
                     child: const Text('Continuar'),
                   ),
                 ),

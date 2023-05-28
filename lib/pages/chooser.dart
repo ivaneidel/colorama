@@ -13,6 +13,7 @@ class ChooserPage extends StatefulWidget {
 }
 
 class _ChooserPageState extends State<ChooserPage> {
+  var _loading = false;
   var _r = 0.0;
   var _g = 0.0;
   var _b = 0.0;
@@ -26,6 +27,8 @@ class _ChooserPageState extends State<ChooserPage> {
   }
 
   void _continue() {
+    _loading = true;
+    if (mounted) setState(() {});
     GlobalState.setR((_r * 255).toInt());
     GlobalState.setG((_g * 255).toInt());
     GlobalState.setB((_b * 255).toInt());
@@ -38,6 +41,8 @@ class _ChooserPageState extends State<ChooserPage> {
         settings: const RouteSettings(name: 'ChooserWaitsPage'),
       ),
     );
+    _loading = false;
+    if (mounted) setState(() {});
   }
 
   @override
@@ -107,7 +112,7 @@ class _ChooserPageState extends State<ChooserPage> {
                 Align(
                   alignment: Alignment.bottomRight,
                   child: ElevatedButton(
-                    onPressed: _continue,
+                    onPressed: _loading ? null : _continue,
                     child: const Text('Continuar'),
                   ),
                 ),

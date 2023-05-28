@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:colorama/configuration/colors.dart';
 import 'package:colorama/firebase_options.dart';
 import 'package:colorama/pages/start.dart';
 import 'package:firebase_core/firebase_core.dart';

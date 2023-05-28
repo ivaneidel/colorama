@@ -14,6 +14,7 @@ class PlayerChoosesPage extends StatefulWidget {
 }
 
 class _PlayerChoosesPageState extends State<PlayerChoosesPage> {
+  var _loading = false;
   var _r = 0.0;
   var _g = 0.0;
   var _b = 0.0;
@@ -27,6 +28,8 @@ class _PlayerChoosesPageState extends State<PlayerChoosesPage> {
   }
 
   void _continue() async {
+    _loading = true;
+    if (mounted) setState(() {});
     GlobalState.setR((_r * 255).toInt());
     GlobalState.setG((_g * 255).toInt());
     GlobalState.setB((_b * 255).toInt());
@@ -39,6 +42,8 @@ class _PlayerChoosesPageState extends State<PlayerChoosesPage> {
         settings: const RouteSettings(name: 'PlayerWaitFinishPage'),
       ),
     );
+    _loading = false;
+    if (mounted) setState(() {});
   }
 
   @override
@@ -108,7 +113,7 @@ class _PlayerChoosesPageState extends State<PlayerChoosesPage> {
                 Align(
                   alignment: Alignment.bottomRight,
                   child: ElevatedButton(
-                    onPressed: _continue,
+                    onPressed: _loading ? null : _continue,
                     child: const Text('Continuar'),
                   ),
                 ),
